@@ -1,0 +1,23 @@
+{
+  "name": "crudapp",
+  "version": "1.0.0",
+  "description": "containing crud app for the student management system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sudarshan2530/StudentManagementSystem.git"
+  },
+  "author": "Sudarshan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sudarshan2530/StudentManagementSystem/issues"
+  },
+  "homepage": "https://github.com/Sudarshan2530/StudentManagementSystem#readme",
+  "dependencies": {
+    "express": "*",
+    "mongoose": "^8.2.2"
+  }
+}
