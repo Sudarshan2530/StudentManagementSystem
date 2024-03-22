@@ -7,5 +7,14 @@ import { Component } from '@angular/core';
 })
 export class ReadComponent {
 
+  name: string="";
   data:any
+   setUpdate(data:any)
+   {
+    this.name=data.name;
+   }
+   setDelete(data:any)
+   {
+    this.name=data.name;
+   }
 }
