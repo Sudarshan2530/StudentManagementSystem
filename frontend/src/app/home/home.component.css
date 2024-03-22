@@ -1,0 +1,14 @@
+.aa1
+{
+    display: flex;
+    justify-content: center;
+}
+a{
+    font-size: xx-large;
+    color: white;
+    text-decoration: none;
+}
+a:hover
+{
+    color: red;
+}
