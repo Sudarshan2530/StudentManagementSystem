@@ -7,7 +7,7 @@ const express = require("express");
 //setting up connection with MongoDB compass
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54lnhl.mongodb.net/?retryWrites=true&w=majority&appName=studentManagement', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54lnhl.mongodb.net/?retryWrites=true&w=majority&appname=studentManagement', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => console.log('Connected to MongoDB...'))
 .catch(err => console.error('Could not connect to MongoDB...', err))
 
@@ -42,40 +42,50 @@ app.get("/studentDetails",async (req, res)=>{
 //controller file should be created for this.
 //adding student details
 app.post('/createStudent', async (req, res) => {
-    let student = new Student({ 
-        RollNo: req.body.RollNo, 
-        Name: req.body.Name, 
-        Address: req.body.Address, 
-        Age: req.body.Age, 
-        Class: req.body.Class 
+    let students = new Student({ 
+        rollNo: req.body.rollNo, 
+        name: req.body.name, 
+        address: req.body.address, 
+        age: req.body.age, 
+        grade: req.body.grade 
     });
 
-    student = await students.save();
+    students = await students.save();
     res.send(students);
   });
 
   //this logic/code should be in server.js file
 app.post('/createStudent', (req, res)=>{
-    const{RollNo, Name, Address, Age, Class} = req.body;
+    const{rollNo, name, address, age, grade} = req.body;
 
-    if(!RollNo || !Name || !Address || !Age || !Class){
+    if(!rollNo || !name || !address || !age || !grade){
         return res.status(400).send('Missing Student details, Please try again');
-
+        
     }
-
-    const newStudent = {RollNo, Name, Address, Age, Class};
+    
+    let newStudent = {rollNo, name, address, age, grade};
+    
     students.push(newStudent);
-    res.status(201).send(newStudent);
+    res.status(201).send(students);
+});
+//controller
+app.get('/studentDetail/:rollNo', (req, res)=>{
+let student = students.find(st => st.rollNo === parseInt(req.params.rollNo));
+
+if(!student){
+    return res.status(404).send('Student data not found');
+}
+res.json(student);
 });
 
-// app.get('/studentDetail/:RollNo', (req, res)=>{
-// const student = student.find(st => st.RollNo === parseInt(req.params.RollNo));
 
-// if(!student){
-//     return res.status(404).send('Student data not found');
-// }
-// res.json(student);
-// });
+app.get('studentDetail/:rollNo', async(req, res)=>{
+     const student = await Student.findById(req.params.rollNo);
+    if(!student)
+    return res.status(404).send('Student not found');
+
+    return res.send(student);
+});
 
 
 app.listen(port, ()=>{
