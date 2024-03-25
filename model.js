@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const studentDB = new mongoose.Schema({
     // rollNo :  {type: mongoose.Types.ObjectId, auto: true},
-    rollNo : Number,
+    rollNo : String,
     name : String,
     address : String,
     age : Number,
