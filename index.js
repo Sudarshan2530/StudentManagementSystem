@@ -21,28 +21,30 @@ app.use(express.json());
 //defining port for the server
 const port = 4001;
 
-let students=[];
-
-// app.get("/studentDetails", (req, res)=>{
-//     res.send("Showing all the student's data in tabular form.");
-// });
-
-//getting student details
-// app.get("/studentDetails", (req, res)=>{
-//     res.json(students);
-// });
-
-
+//fetching student details
 app.get("/studentDetails",async (req, res)=>{
     const students = await Student.find();
     res.send(students);
 });
 
+//fetching student details by id
+app.get("/studentDetail/:rollNo", async(req, res)=>{
+    try{
+        const student = await Student.findById(req.params.rollNo);
+        if(!student){
+            return res.status(401).json({message: 'student not found'});
+        }
+        res.json(student);
+    }
+    catch (err){
+        res.status(500).json({message: err.message});
+    }
+});
 
-//controller file should be created for this.
+
 //adding student details
 app.post('/createStudent', async (req, res) => {
-    let students = new Student({ 
+    const students = new Student({ 
         rollNo: req.body.rollNo, 
         name: req.body.name, 
         address: req.body.address, 
@@ -50,41 +52,53 @@ app.post('/createStudent', async (req, res) => {
         grade: req.body.grade 
     });
 
-    students = await students.save();
-    res.send(students);
-  });
-
-  //this logic/code should be in server.js file
-app.post('/createStudent', (req, res)=>{
-    const{rollNo, name, address, age, grade} = req.body;
-
-    if(!rollNo || !name || !address || !age || !grade){
-        return res.status(400).send('Missing Student details, Please try again');
-        
+    try{
+        const newStudent = await students.save();
+        res.status(201).json(newStudent);
+    }
+    catch(err){
+        res.status(400).json({message: err.message});
     }
     
-    let newStudent = {rollNo, name, address, age, grade};
-    
-    students.push(newStudent);
-    res.status(201).send(students);
+  });
+
+  //updating student details by id
+app.put('/updateStudent/:rollNo', async (req, res)=>{
+   try{
+    const student = await Student.findById(req.params.rollNo);
+    if(!student){
+        return res.status(404).json({message: 'Student not found'});
+    }
+
+    student.rollNo = req.body.rollNo 
+    student.name = req.body.name 
+    student.address = req.body.address
+    student.age = req.body.age
+    student.grade = req.body.grade 
+
+    const updateStudent = await student.save();
+    res.json(updateStudent);
+   }
+   catch(err){
+    res.status(400).json({message: err.message});
+   }
+   
 });
-//controller
-app.get('/studentDetail/:rollNo', (req, res)=>{
-let student = students.find(st => st.rollNo === parseInt(req.params.rollNo));
 
-if(!student){
-    return res.status(404).send('Student data not found');
-}
-res.json(student);
-});
+//removing student details by id
+app.delete('/deleteStudent/:rollNo',async(req,res)=>{
+    try{
 
-
-app.get('studentDetail/:rollNo', async(req, res)=>{
-     const student = await Student.findById(req.params.rollNo);
-    if(!student)
-    return res.status(404).send('Student not found');
-
-    return res.send(student);
+        const student = await Student.findByIdAndDelete(req.params.rollNo)
+        if(!student){
+            return res.status(404).json({message: "student data not found"});
+        }
+        
+        res.json({message: 'Student data removed'});
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
 });
 
 
