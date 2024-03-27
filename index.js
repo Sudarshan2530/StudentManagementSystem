@@ -11,7 +11,6 @@ mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54
 .then(() => console.log('Connected to MongoDB...'))
 .catch(err => console.error('Could not connect to MongoDB...', err))
 
-
 //initializing express server
 const app = express();
 
@@ -41,12 +40,20 @@ app.get("/studentDetail/:rollNo", async(req, res)=>{
     }
 });
 
-
 //adding student details
 app.post('/createStudent', async (req, res) => {
+
+// this.app.get();
+    //counting the total number of entries in database.
+    //  count = await Student.countDocuments();
+    let rollNo = 1;
+    while (await Student.exists({ rollNo: rollNo })) {
+        rollNo++;
+    }
+    
     const students = new Student({ 
-        rollNo: req.body.rollNo, 
-        name: req.body.name, 
+        rollNo: rollNo,
+        name: req.body.name,
         address: req.body.address, 
         age: req.body.age, 
         grade: req.body.grade 
@@ -54,7 +61,8 @@ app.post('/createStudent', async (req, res) => {
 
     try{
         const newStudent = await students.save();
-        res.status(201).json(newStudent);
+        
+        res.status(201).json({message:'Student data created'});
     }
     catch(err){
         res.status(400).json({message: err.message});
@@ -71,13 +79,15 @@ app.put('/updateStudent/:rollNo', async (req, res)=>{
     }
 
     student.rollNo = req.body.rollNo 
-    student.name = req.body.name 
+    student.name = req.body.name
     student.address = req.body.address
-    student.age = req.body.age
+    student.age = req.body.ages
     student.grade = req.body.grade 
 
     const updateStudent = await student.save();
-    res.json(updateStudent);
+    
+    // console.log("Student data has been updated successfully!!");
+    res.json({message:'Student data has been updated Successfully!!'});
    }
    catch(err){
     res.status(400).json({message: err.message});
@@ -87,13 +97,14 @@ app.put('/updateStudent/:rollNo', async (req, res)=>{
 
 //removing student details by id
 app.delete('/deleteStudent/:rollNo',async(req,res)=>{
+    // const count = await Student.countDocuments();
     try{
 
         const student = await Student.findByIdAndDelete(req.params.rollNo)
         if(!student){
             return res.status(404).json({message: "student data not found"});
         }
-        
+
         res.json({message: 'Student data removed'});
     }
     catch(err){
