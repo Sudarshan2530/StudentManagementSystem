@@ -1,1 +1,141 @@
-<p>view works!</p>
+
+<div class="class a">
+    <br><br>
+    <div class="container mt-4 aa" >
+      <div class="card " style="background-color: aqua;">
+        <br>    
+              <h3 style="text-align: center; ">Student Registation</h3>
+  <form>
+      <div class="form-group">
+        <!-- <b><label>Name</label></b> -->
+        <input type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"  class="form-control" id="name" placeholder="Enter the Name"> 
+      </div>
+      <br>
+  
+      <div class="form-group">
+          <!-- <b><label>Address</label></b> -->
+          <input type="text" class="form-control"  [(ngModel)]="address" [ngModelOptions]="{standalone: true}" id="address"placeholder="Address" > 
+        </div>
+        <br>
+  
+        <div class="form-group">
+          <!-- <b><label>Class</label></b> -->
+          <input type="text" class="form-control" [(ngModel)]="grade" [ngModelOptions]="{standalone: true}" id="grade"placeholder="Class" > 
+        </div>
+        <br>
+        <div class="form-group">
+          <!-- <b><label>Age</label></b> -->
+          <input type="text" class="form-control" [(ngModel)]="age" [ngModelOptions]="{standalone: true}" id="age" placeholder="Age"> 
+        </div>
+        <div class="aa33">
+          <button type="submit" (click)="save()" class="btn btn-primary text-center" style="display: flex; justify-content: center; margin-right: 10px;">Submit</button>
+      <button type="reset"class="btn btn-danger text-center" style="display: flex; justify-content: center;">Reset</button>
+          
+        </div>
+      
+    </form>
+  </div>
+  </div>
+  <!-- <div class="container">
+    <form #search="ngForm"(ngSubmit)="onSearch(search.value)" >
+      <input type="search"ngModel name="_id">
+      <button type="submit" class="btn btn-primary text-center">Submit</button>
+    </form>
+  </div> -->
+  
+  
+  <!-- 
+  <html>
+  <head>
+      <title>form</title>
+      
+  
+  </head>
+  <body>
+      <div class="container aa">
+          <h2>Registration Form</h2>
+  <form >
+    <div class="form-group">
+      <b><label>Name</label></b>
+      <input type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"  class="form-control" id="name" placeholder="Name"> 
+    </div>
+    <div class="form-group">
+      <b><label>Address</label></b>
+      <input type="text" class="form-control"  [(ngModel)]="address" [ngModelOptions]="{standalone: true}" id="address" placeholder="Address"> 
+    </div>
+  
+    <div class="form-group">
+      <b><label>Class</label></b>
+      <input type="text" class="form-control" [(ngModel)]="grade" [ngModelOptions]="{standalone: true}" id="grade" placeholder="Class"> 
+    </div>
+    <div class="form-group">
+      <b><label>Age</label></b>
+      <input type="text" class="form-control" [(ngModel)]="age" [ngModelOptions]="{standalone: true}" id="age" placeholder="Age"> 
+    </div>
+  
+    <button type="submit" (click)="save()" class="btn btn-primary text-center" style="display: flex; justify-content: center;">Submit</button>
+  </form>
+  </div>
+  </body>
+  </html> -->
+  
+  <!-- <div class="container mt-4" >
+   <h1>Student Table</h1>
+  <table class="table">
+    <thead>    
+    <tr>
+        <th scope="col">RollNumber</th>  
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Class</th>
+        <th scope="col">Age</th>    
+        <th scope="col">Option</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let StudentItem of StudentArray">
+        <td>{{StudentItem._id }}</td>
+        <td>{{StudentItem.name  | uppercase}}</td>
+        <td>{{StudentItem.address |uppercase}}</td>
+        <td>{{StudentItem.grade }}</td>
+        <td>{{StudentItem.age }}</td>
+        <td>
+          <button type="button" class="btn btn-warning" (click)="setUpdate(StudentItem)">Update</button>
+          <button type="button" class="btn btn-danger" (click)="setDelete(StudentItem)">Delete</button>            
+        </td>
+      </tr>          
+    </tbody>
+  </table>
+  
+  </div> -->
+  <br>
+  <div class="container table-responsive py-5 qq1" >
+    <h1 style="text-align: center;">Student Table</h1>
+   <table class="table table-bordered table-hover ">
+     <thead class="thead-dark">    
+     <tr>
+         <th scope="col" style="width: 10%;">RollNumber</th>  
+         <th scope="col">Name</th>
+         <th scope="col">Address</th>
+         <th scope="col">Class</th>
+         <th scope="col">Age</th>    
+         <th scope="col" style="width: 20%;">Option</th>
+       </tr>
+     </thead>
+     <tbody>
+         <tr *ngFor="let StudentItem of StudentArray">
+         <!-- <td>{{StudentItem._id }}</td> -->
+         <td class="qq34">{{StudentItem.rollNo }}</td>
+         <td>{{StudentItem.name  | uppercase}}</td>
+         <td>{{StudentItem.address |uppercase}}</td>
+         <td>{{StudentItem.grade }}</td>
+         <td>{{StudentItem.age }}</td>
+         <td>
+           <button type="button" class="btn btn-warning" (click)="setUpdate(StudentItem)" style="margin-right: 10px;">Update</button>
+           <button type="button" class="btn btn-danger" (click)="setDelete(StudentItem)">Delete</button>    
+                 
+         </td>
+       </tr>          
+     </tbody>
+   </table>
+  </div>
