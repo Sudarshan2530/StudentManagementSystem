@@ -6,14 +6,16 @@ import { DeleteComponent } from './delete/delete.component';
 import { ReadComponent } from './read/read.component';
 import { SearchComponent } from './search/search.component';
 import { UpdateComponent } from './update/update.component';
+import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
+  {path:'',component:ViewComponent},
   {path:'create',component:CreateComponent},
   {path:'read',component:ReadComponent},
   {path:'update',component:UpdateComponent},
   {path:'delete',component:DeleteComponent},
   {path:'search',component:SearchComponent},
+  {path:'view',component:ViewComponent}
 ];
 
 @NgModule({
