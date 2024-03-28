@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -8,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ViewComponent {
 
+  
   StudentArray : any[] = [];
   currentStudentID = "";
   name: any
@@ -127,6 +127,5 @@ register()
   //   })
 
   // }
-
 
 }
