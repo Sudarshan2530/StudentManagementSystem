@@ -4,6 +4,9 @@ const Student = require('./model')
 //adding express module
 const express = require("express");
 
+//importing cors
+const cors = require('cors');
+
 //setting up connection with MongoDB compass
 const mongoose = require('mongoose');
 
@@ -14,8 +17,13 @@ mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54
 //initializing express server
 const app = express();
 
+
+
 //to handle the json data
 app.use(express.json());
+
+//enabling cors origin on server
+app.use(cors());
 
 //defining port for the server
 const port = 4001;
