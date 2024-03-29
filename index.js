@@ -3,8 +3,6 @@
 const Student = require('./model')
 //adding express module
 const express = require("express");
-
-//importing cors
 const cors = require('cors');
 
 //setting up connection with MongoDB compass
@@ -89,7 +87,7 @@ app.put('/updateStudent/:rollNo', async (req, res)=>{
     student.rollNo = req.body.rollNo 
     student.name = req.body.name
     student.address = req.body.address
-    student.age = req.body.ages
+    student.age = req.body.age
     student.grade = req.body.grade 
 
     const updateStudent = await student.save();
