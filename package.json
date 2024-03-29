@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Sudarshan2530/StudentManagementSystem#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "*",
     "mongoose": "^8.2.2"
   }
