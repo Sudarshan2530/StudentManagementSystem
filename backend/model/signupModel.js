@@ -16,7 +16,7 @@ const signupDB = new mongoose.Schema({
     type :String,
     required: true
    },
-   timestamps: true,
+   // timestamps: true,
 });
 
 const signUp = mongoose.model('signUp', signupDB);
