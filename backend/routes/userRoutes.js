@@ -9,12 +9,13 @@
 
 // module.exports=userRouter 
 const express=require('express');
-const {createUser}=require('../controller/signUpController');
+const {createUser, loginUser}=require('../controller/signUpController');
 
 
 const router=express.Router();
 
 router.post("/register",createUser);
+router.post("/login",loginUser);
 
 
 
