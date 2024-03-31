@@ -34,3 +34,9 @@ const createUser=asyncHandler(async(req,res)=>
         throw new Error("User data is not valid!!!");
     }
 })
+
+
+module.exports={
+
+    createUser
+}
