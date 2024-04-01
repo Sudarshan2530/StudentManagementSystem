@@ -2,20 +2,23 @@
 
 const Student = require('./model')
 const router =require("./backend/routes/userRoutes")
+const connectDB=require("./backend/config/db")
 //adding express module
 const express = require("express");
 const cors = require('cors');
 
 //setting up connection with MongoDB compass
-const mongoose = require('mongoose');
+connectDB();
 
-mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54lnhl.mongodb.net/?retryWrites=true&w=majority&appname=studentManagement', {useNewUrlParser: true, useUnifiedTopology: true})
-.then(() => console.log('Connected to MongoDB...'))
-.catch(err => console.error('Could not connect to MongoDB...', err))
+// const mongoose = require('mongoose');
+
+// mongoose.connect('mongodb+srv://sudarshan:AFrECGQFWYq58ThL@studentmanagement.v54lnhl.mongodb.net/?retryWrites=true&w=majority&appname=studentManagement', {useNewUrlParser: true, useUnifiedTopology: true})
+// .then(() => console.log('Connected to MongoDB...'))
+// .catch(err => console.error('Could not connect to MongoDB...', err))
 
 //initializing express server
-const app = express();
 
+const app = express();
 
 
 //to handle the json data
