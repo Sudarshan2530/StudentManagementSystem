@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { error } from 'console';
-import { response } from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -17,7 +17,7 @@ export class UpdateComponent {
   password:any;
 
 
-  constructor(private http: HttpClient)
+  constructor(private http: HttpClient, private router:Router)
   {
 
   }
@@ -32,14 +32,17 @@ export class UpdateComponent {
       password:this.password,
     }
 
-    this.http.post('http://localhost:4201/update', userData.email)
+    this.http.post('http://localhost:4001/api/users/register', userData)
     .subscribe((response:any)=>
     {
       console.log("You have registered successfully!!", response)
+      alert("Registration has been completed")
+      this.router.navigate(['/search']);
     },
     error=> {
       console.log("Please fill details ", error);
-  
+      
+      alert("Please fill all the details")
     })
   }
 }
