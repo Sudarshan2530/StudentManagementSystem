@@ -9,7 +9,7 @@ import { UpdateComponent } from './update/update.component';
 import { ViewComponent } from './view/view.component';
 
 const routes: Routes = [
-  {path:'',component:ViewComponent},
+  {path:'',component:UpdateComponent},
   {path:'create',component:CreateComponent},
   {path:'read',component:ReadComponent},
   {path:'update',component:UpdateComponent},
