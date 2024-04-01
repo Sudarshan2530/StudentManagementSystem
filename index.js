@@ -23,7 +23,7 @@ app.use(express.json());
 
 //enabling cors origin on server
 app.use(cors());
-app.use("/api/users/",router);
+app.use("/api/users/",router);//adding for router purpose
 
 //defining port for the server
 const port = 4001;
