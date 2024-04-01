@@ -1,0 +1,87 @@
+@startuml
+title User and Student Management Flow
+
+actor Client
+entity UI
+entity Server
+database DB
+
+Client -> UI: registerUser(name, email, password)
+activate UI
+UI -> Server: POST /api/users/register
+activate Server
+Server -> DB: Create User
+activate DB
+DB -->> Server: User
+deactivate DB
+Server -->> UI: Response (User Registered)
+deactivate Server
+UI -->> Client: Alert (Registration Completed)
+deactivate UI
+
+Client -> UI: login(email, password)
+activate UI
+UI -> Server: POST /api/users/login
+activate Server
+Server -> DB: Find User
+activate DB
+DB -->> Server: User
+deactivate DB
+Server -->> UI: Response (Login Successful)
+deactivate Server
+UI -->> Client: Alert (Login Successful)
+deactivate UI
+
+Client -> UI: getAllStudent()
+activate UI
+UI -> Server: GET /studentDetails
+activate Server
+Server -> DB: Get All Students
+activate DB
+DB -->> Server: Students
+deactivate DB
+Server -->> UI: Response (All Students)
+deactivate Server
+UI -->> Client: Display All Students
+deactivate UI
+
+Client -> UI: setUpdate(data)
+activate UI
+UI -> Server: PUT /updateStudent/{id}
+activate Server
+Server -> DB: Update Student
+activate DB
+DB -->> Server: Updated Student
+deactivate DB
+Server -->> UI: Response (Student Updated)
+deactivate Server
+UI -->> Client: Alert (Student Updated)
+deactivate UI
+
+Client -> UI: setDelete(data)
+activate UI
+UI -> Server: DELETE /deleteStudent/{id}
+activate Server
+Server -> DB: Delete Student
+activate DB
+DB -->> Server: Deleted Student
+deactivate DB
+Server -->> UI: Response (Student Deleted)
+deactivate Server
+UI -->> Client: Alert (Student Deleted)
+deactivate UI
+
+Client -> UI: save()
+activate UI
+UI -> Server: POST /createStudent
+activate Server
+Server -> DB: Create Student
+activate DB
+DB -->> Server: Created Student
+deactivate DB
+Server -->> UI: Response (Student Created)
+deactivate Server
+UI -->> Client: Alert (Student Registered)
+deactivate UI
+
+@enduml
