@@ -6,7 +6,13 @@ const jwt=require("jsonwebtoken")
 
 const createUser=asyncHandler(async(req,res)=>
 {
+    
     const{name,email,password}=req.body;
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!emailRegex.test(email)) {
+        res.status(400);
+        throw new Error("Email format is not valid. It should be email@gmail.com");
+    }
     if(!name|| !email || !password)
     {
         res.status(400);
