@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const User=require('../model/signupModel');
 const jwt=require("jsonwebtoken")
 
+
 const createUser=asyncHandler(async(req,res)=>
 {
     const{name,email,password}=req.body;
@@ -36,8 +37,9 @@ const createUser=asyncHandler(async(req,res)=>
 })
 
 const loginUser=asyncHandler(async(req,res)=>{
-    console.log("Enter in login user function!!");
+    // console.log("Enter in login user function!!");
     const{email,password}=req.body;
+    console.log(req.body);
     if(!email || !password)
     {
         res.status(400);
@@ -48,16 +50,29 @@ const loginUser=asyncHandler(async(req,res)=>{
     if(user &&(await bcrypt.compare(password, user.password)))
     {
         const accessToken=jwt.sign({id:user._id,name:user.name,email:user.email},"rohit", {expiresIn: '5M'});
-        res.status(201).send({mes:"User created!!",token:accessToken})
+        res.status(201).send({mes:"User Login SuccessFully!!",token:accessToken})
     }
     else{
         res.status(400).send({mes:"User not found"});
     }
+})
+const logoutUser = asyncHandler(async (req, res) => 
+{
+    const token = null;
+
+    res.status(200).send({mes: "User Logged Out Successfully!!", token});
+})
+
+const currentUser= asyncHandler(async(req,res)=>
+{
+    res.json(req.user);
 })
 
 
 module.exports={
 
     createUser,
-    loginUser
-}
+    loginUser,
+    currentUser,
+    logoutUser
+};
