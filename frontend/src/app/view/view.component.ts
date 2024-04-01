@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// import { UniversalNavbar } from '../navbar/navbar.component';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -19,7 +20,7 @@ export class ViewComponent {
   public baseUrl='http://localhost:4001';
   vali:any
   
-  constructor(private http: HttpClient ) 
+  constructor(private http: HttpClient) 
   {
     // this.getAllStudent();
   }

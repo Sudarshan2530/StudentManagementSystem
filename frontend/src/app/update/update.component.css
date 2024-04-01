@@ -8,20 +8,21 @@ background: #f1f1f1;
 }
 .box8{
 box-shadow: 0px 0px 5px 5px #666;
-padding: 200px;
-background-color:rgb(211, 204, 204);
+padding: 50px;
+background-color:rgb(210, 209, 243);
+
 }
 .mx-t3{
 margin-top: -3rem;
 color: black;
 }
 
-.col-sm-6{
-  margin: 10px;
-}
+
 .col-sm-12{
  margin: 10px;
 }
 .text-info{
-  color: antiquewhite;
+  color: rgb(196, 124, 30);
 }
+
+
