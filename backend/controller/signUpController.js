@@ -62,12 +62,21 @@ const loginUser=asyncHandler(async(req,res)=>{
         res.status(400).send({mes:"User not found"});
     }
 })
-const logoutUser = asyncHandler(async (req, res) => 
-{
-    const token = null;
+// const logoutUser = asyncHandler(async (req, res) => 
+// {
+//     const token = null;
 
-    res.status(200).send({mes: "User Logged Out Successfully!!", token});
-})
+//     res.status(200).send({mes: "User Logged Out Successfully!!", token});
+// })
+
+let refreshTokens = []; 
+
+const logoutUser = asyncHandler(async (req, res) => {
+    const { token } = req.body;
+    refreshTokens = refreshTokens.filter(t => t !== token);
+
+    res.status(200).send({mes: "User Logged Out Successfully!!", token: null});
+});
 
 const currentUser= asyncHandler(async(req,res)=>
 {
