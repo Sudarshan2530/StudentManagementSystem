@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
 
 
-  token :any
+  // token :any
   
   // logout(token: string) {
   //   localStorage.setItem('token', token);
