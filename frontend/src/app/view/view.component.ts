@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 // import { UniversalNavbar } from '../navbar/navbar.component';
 @Component({
   selector: 'app-view',
@@ -7,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './view.component.css'
 })
 export class ViewComponent {
+
 
   
   StudentArray : any[] = [];
@@ -20,15 +22,29 @@ export class ViewComponent {
   public baseUrl='http://localhost:4001';
   vali:any
   
-  constructor(private http: HttpClient) 
+  constructor(private http: HttpClient, private router: Router) 
   {
     // this.getAllStudent();
   }
-  ngOnInit()
-  {
-    this.getAllStudent();
+  // ngOnInit()
+  // {
+  //   const token = localStorage.getItem('token');
+  //   if(token=="")
+  //   {
+  //     this.router.
+  //   }
+  //   this.getAllStudent();
 
+  // }
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if(!token) {
+      this.router.navigate(['/search']);
+    } else {
+      this.getAllStudent();
+    }
   }
+  
   getAllStudent()
   {
     this.http.get(`${this.baseUrl}/studentDetails`).subscribe((data:any)=>{
