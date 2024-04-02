@@ -9,18 +9,34 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
+
+  // token :any
+  
+  // logout(token: string) {
+  //   localStorage.setItem('token', token);
+  // }
   constructor(private router:Router, private http: HttpClient){}
   login(){
+    
     this.router.navigate(['/search'])
   }
   register(){
     this.router.navigate(['/update'])
   }
-  logout(){
-    this.http.get("http://localhost:4001/api/users/logout").subscribe((data:any)=>{
-      alert("Logout Successfull!")
+  // logout(){
+  //   this.http.post("http://localhost:4001/api/users/logout",token).subscribe((data:any)=>{
+  //     alert("Logout Successfull!")
+  //     this.router.navigate(['/search'])
+  //   },error=>console.log(error))
+  // }
+  logout() {
+    
+    const token = localStorage.getItem('token');
+    this.http.post("http://localhost:4001/api/users/logout", { token }).subscribe((data:any)=>{
+      alert("Logout Successful!")
+      localStorage.removeItem('token'); // Remove the token from local storage
       this.router.navigate(['/search'])
-    },error=>console.log(error))
+    }, error => console.log(error))
   }
 }
 
