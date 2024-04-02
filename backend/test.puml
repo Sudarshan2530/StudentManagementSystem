@@ -1,0 +1,120 @@
+@startuml
+title Client and Student Management Flow
+
+actor Client
+entity UI
+entity Server
+database DB
+
+
+
+' Register
+
+Client->UI: Access website
+UI->Client: Render registration form
+Client->UI: Fill registration form (name, email, password)
+alt Information Validation?
+    UI->Server: UI will call the backend API (Post)
+    Server->DB: Check if email is present
+    alt Email present?
+        Server->UI: Throw error, already present
+    else Email not present
+        Server->DB: Store the data
+        Server->UI: Success Message
+        UI->Client: Alert with Success message 'Registed Successfully!!'
+    end
+end
+
+
+'Login
+
+Client -> UI: Rederict to Login Page
+alt Credential Validation?
+    UI -> Server : Providing request body for login
+    alt if (data) is Validation?
+    Server -> DB : fetch the Client data
+    Server -> UI : Send Success Response(201)
+    UI -> Client : Message of Login Success and redirect to Dashboard
+    else 
+    Server -> UI : Send error message (400)
+    UI -> Client : Alert message of Please enter valid credential
+end
+
+
+
+' dashboard
+'get all
+Client-> UI :  Main Page Client Hit on Read
+
+alt  studentDetails endpoint Validation?
+    UI -> Server : Call Get all student API
+    Server -> DB : Fetch all students data
+    DB -> Server : Provide all the data present in the database
+    Server -> UI :It will show all student detail at Client side !
+    alt hit studentDetail/id endpoint Validation?
+        UI -> Server : Call Get student by id API and provide ID
+        Server -> DB : Fetch the data of provided id
+        alt provided id valid?
+            DB -> Server : Send detail of perticular student
+            Server -> UI : Provide the response body with success message
+        else 
+            DB -> Server : Send error message of invalid id
+            Server -> UI : send error message of Please provide valid id
+            UI -> Client : ID is not found
+        end
+    end
+end
+
+
+'post
+Client -> UI : request to add student data Hit Insert
+UI -> Server : Call Post method and provide request body collected by Client
+    alt request body valid?
+        Server -> DB : Store all the data in DB received from UI
+        DB -> Server: Send success operation
+    else request body invalid?
+        Server -> UI: Send error message of invalid request body
+        ' UI --> Server: Please provide valid request body
+        Client <-- UI: Please valid request body /all mandatory details
+    end
+
+'put
+Client -> UI : request to update selected Student data
+
+Client <-- UI: Provide form to update selected student data
+Client -> UI: entering data which needs to be updated
+
+UI --> Server: UI will call the put method from server
+    alt provided id is valid?
+        Server --> DB : Fetch the data and replace it with new one
+        Server <-- DB : send message of success
+        UI <-- Server : Send a success response code
+        UI --> Client : Send alert message with "Details successfully updated"
+    else provided id is not present?
+        Server --> DB : Provide id to check with database
+        Server <-- DB : send message of invalid id
+        UI <-- Server : Send a error response code
+        UI --> Client : Send alert message with "Provide valid id" 
+    end
+
+
+'delete
+Client -> UI : request to delete selected  Student data
+
+Client <-- UI: Provide button to delete
+Client -> UI: Click delete button 
+
+UI --> Server: UI will call the delete method from server
+    alt provided id is valid?
+        Server --> DB : Delete the data by provided id
+        Server <-- DB : send message of success
+        UI <-- Server : Send a success response code
+        UI --> Client : Send alert message with "Details deleted successfully"
+    else provided id is not present?
+        
+        Server <-- DB : send message of invalid id
+        UI <-- Server : Send a error response code
+        UI --> Client : Send alert message with "Provide valid id"
+    end
+
+@enduml

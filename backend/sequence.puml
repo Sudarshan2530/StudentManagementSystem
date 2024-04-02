@@ -1,0 +1,178 @@
+@startuml
+title Client and Student Management Flow
+
+actor Client
+entity UI
+entity Server
+database DB
+
+Client -> UI: client is accessing website
+activate UI
+UI -> Client: Render Registration from to user
+Client -> UI:registerClient(name, email, password)
+activate UI
+UI -> Server: UI will call the backend API Post
+activate Server
+
+alt Request Body Verified?
+        Server -> DB: Server will validate request body & Create Client
+        UI -> Server: Continue Login Process
+    else OTP Not Verified
+        Server -> UI: OTP Verification Failed
+        UI -> Client: Display Error Message
+    end
+
+activate DB
+DB -->> Server: Sucessfull Operation
+deactivate DB
+Server -->> UI: Response (Client Registered) with response code 201 created
+deactivate Server
+UI -->> Client: UI will send Alert (Registration Completed) to user and redirect to Login page
+deactivate UI
+
+Client -> UI: Client will provide login(email, password)
+activate UI
+UI -> Server: UI will call POST /api/Clients/login
+activate Server
+Server -> DB: Server will request DB to check if the client is already exist
+activate DB
+DB -->> Server: If present then it will return and success message 
+deactivate DB
+Server -->> UI: Response (Login Successful)
+deactivate Server
+UI -->> Client: Alert (Login Successful)
+deactivate UI
+
+Client -> UI: getAllStudent()
+activate UI
+UI -> Server: GET /studentDetails
+activate Server
+Server -> DB: Get All Students
+activate DB
+DB -->> Server: Students
+deactivate DB
+Server -->> UI: Response (All Students)
+deactivate Server
+UI -->> Client: Display All Students
+deactivate UI
+
+Client -> UI: setUpdate(data)
+activate UI
+UI -> Server: PUT /updateStudent/{id}
+activate Server
+Server -> DB: Update Student
+activate DB
+DB -->> Server: Updated Student
+deactivate DB
+Server -->> UI: Response (Student Updated)
+deactivate Server
+UI -->> Client: Alert (Student Updated)
+deactivate UI
+
+Client -> UI: setDelete(data)
+activate UI
+UI -> Server: DELETE /deleteStudent/{id}
+activate Server
+Server -> DB: Delete Student
+activate DB
+DB -->> Server: Deleted Student
+deactivate DB
+Server -->> UI: Response (Student Deleted)
+deactivate Server
+UI -->> Client: Alert (Student Deleted)
+deactivate UI
+
+Client -> UI: save()
+activate UI
+UI -> Server: POST /createStudent
+activate Server
+Server -> DB: Create Student
+activate DB
+DB -->> Server: Created Student
+deactivate DB
+Server -->> UI: Response (Student Created)
+deactivate Server
+UI -->> Client: Alert (Student Registered)
+deactivate UI
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+' @startuml sequence_diagram
+' skinparam backgroundColor #EEEBDD
+' skinparam box true
+
+' actor Client
+' entity UI
+' entity Server
+' database DB
+
+
+' Client -> UI: Access website
+' UI -> Client: Render registration form
+' Client -> UI: Fill registration form
+' UI -> Server: UI will call the backend API Post
+
+' ' if (Client is registered?) then (yes)
+' '     Server -> DB: Query Client information
+' '     DB --> Server: Client registration data stored
+' '     Server --> UI: Validation result
+' '     UI -> Client: Redirect to login page
+' ' else (no)
+' '     UI -> Client: Redirect to registration form
+' ' endif
+' Server -> DB: If the request body is validated in correct manner then data will be store or server will throw error
+' ' DB --> Server: DB will provide object Id to serv
+' Server --> UI: It will provide Success Response Code 201
+' Server --> UI: 
+
+' Client -> UI: Provide login information
+' UI -> Server: POST /login
+' Server -> DB: Query Client information
+' DB --> Server: Client login data retrieved
+' Server --> UI: Validation result
+' UI -> Client: Show success message
+' UI -> Client: Redirect to dashboard
+' Client -> UI: View options (add, view, update, delete)
+
+' UI -> Server: POST /student (add student data)
+' Server -> DB: Store student data
+' DB --> Server: Student data stored
+' Server --> UI: Success message
+
+' UI -> Server: PUT /student/:id (update student data)
+' Server -> DB: Update student data
+' DB --> Server: Update successful
+' Server --> UI: Success message
+
+' UI -> Server: DELETE /student/:id (delete student data)
+' Server -> DB: Delete student data
+' DB --> Server: Delete successful
+' Server --> UI: Success message
+
+' UI -> Server: GET /studentDetails (view all student data)
+' Server -> DB: Retrieve all student data
+' DB --> Server: Student data retrieved
+' Server --> UI: Display all student data
+
+' @enduml
+' -->
